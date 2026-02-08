@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Sunshine</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital@0;1&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <audio id="bg-music" loop></audio>
+    <button id="mute-btn">🔊</button>
+
+    <!-- Hearts Falling -->
+    <div id="falling-hearts"></div>
+
+    <!-- PAGE 1 -->
+    <section id="page1" class="active">
+        <div class="heart-center">❤</div>
+        <div id="countdown-text"></div>
+        <button id="open-surprise" class="hidden">MY YOU 💌</button>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section id="page2">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="stamp">❤</div>
+            </div>
+
+            <div class="letter hidden">
+                <div class="paper">
+                    <div class="paper-top">
+                        <img src="assets/images/photo1.jpg" alt="Your Photo" class="letter-photo">
+                        <div class="paper-title">
+                            <h2>To My Dearest Friend</h2>
+                            <p class="tiny">A small letter from my heart 💗</p>
+                        </div>
+                    </div>
+
+                    <div class="letter-content">
+                        <p>They say the world is a vast place, but to me, it became small and perfect the day I met you.</p>
+
+                        <p>
+                            You are the <b>Sunshine</b> that filters through my quietest moments.<br>
+                            You are the <b>Sunshine</b> that makes my soul feel safe.
+                        </p>
+
+                        <p>
+                            Whenever life feels a bit too loud for an introvert like me,
+                            I find peace in our bond.
+                        </p>
+
+                        <p>
+                            I hope this year brings you as much warmth as you bring to me.
+                        </p>
+
+                        <p class="sign">Happy Birthday 💌</p>
+                    </div>
+
+                    <button id="love-btn">LOVE 💗</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 3 -->
+    <section id="page3">
+        <div id="gift-container">
+            <div class="gift-box">🎁</div>
+        </div>
+
+        <div id="hanging-gallery" class="hidden">
+            <div class="hanging-area" id="hangingArea"></div>
+
+            <!-- CHANGED: diary now opens page4 -->
+            <button class="open-diary-btn" id="openDiaryBtn">
+                FOR YOU
+            </button>
+        </div>
+    </section>
+
+    <!-- PAGE 4 (DIARY INSIDE SAME PAGE) -->
+    <section id="page4" class="diary-only">
+        <div class="diary-paper">
+            <h1 class="diary-title">Dear Sunshine,</h1>
+            <div id="diary-body"></div>
+            <p class="final-line hidden">This is my gift to you — forever.</p>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

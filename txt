@@ -1,0 +1,568 @@
+:root {
+    --pink: #ffccd5;
+    --soft-red: #ff4d6d;
+    --cream: #fff5f5;
+    --text-color: #594e4e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden; /* Prevent scrolling during transitions */
+    height: 100vh;
+    width: 100vw;
+}
+
+section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+    background-size: cover;
+    background-position: center;
+}
+
+section.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Backgrounds provided by user */
+#page1 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTe-aoXtYgbUR1nwLjalpLlz9ViEhZn6tNRhg&s'); } /* Add full base64 here */
+#page2 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvHDAOOe98QqfOl3uDxsR0luWkpHtRJXAPfA&s'); }
+#page3 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvHDAOOe98QqfOl3uDxsR0luWkpHtRJXAPfA&s'); }
+#page4 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvHDAOOe98QqfOl3uDxsR0luWkpHtRJXAPfA&s'); }
+
+/* Mute Button */
+#mute-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Page 1: Countdown */
+.heart-center {
+    font-size: 80px;
+    color: var(--soft-red);
+    animation: pulse 1.5s infinite;
+}
+
+#countdown-text {
+    font-size: 4rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.hidden { display: none; }
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: var(--soft-red);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-top: 20px;
+}
+
+button:hover { transform: scale(1.1); }
+
+/* Page 2: Envelope */
+.envelope-wrapper {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #f19ea3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.envelope::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 100px solid #f19ea3;
+    transform-origin: top;
+    transition: transform 0.5s 0.5s;
+    z-index: 2;
+}
+
+.stamp {
+    width: 50px;
+    height: 50px;
+    background: var(--soft-red);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    border: 2px dashed white;
+}
+
+.letter {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    left: 5%;
+    height: 150%;
+    background: white;
+    padding: 20px;
+    transition: transform 0.8s;
+    z-index: 1;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+}
+
+.letter-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.letter-content {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.open .envelope::before { transform: rotateX(180deg); z-index: 0; }
+.open .letter { transform: translateY(-120px); z-index: 2; }
+
+/* Page 3: Polaroid */
+#polaroid-gallery {
+    width: 100%;
+    height: 80%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 50px;
+}
+
+.photo-container {
+    display: flex;
+    gap: 30px;
+}
+
+.polaroid {
+    background: white;
+    padding: 10px 10px 30px 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: rotate(-3deg);
+    display: inline-block;
+    animation: swing 3s ease-in-out infinite alternate;
+}
+
+.polaroid img { width: 180px; height: 180px; object-fit: cover; }
+.polaroid p {
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Page 4: Diary */
+.diary-paper {
+    width: 80%;
+    max-width: 600px;
+    background: #fff;
+    background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+    background-size: 100% 30px;
+    padding: 40px;
+    min-height: 400px;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.1);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes swing {
+    from { transform: rotate(-5deg); }
+    to { transform: rotate(5deg); }
+}
+
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+
+
+
+---------------------------------------------
+:root {
+    --pink: #ffccd5;
+    --soft-red: #ff4d6d;
+    --cream: #fff5f5;
+    --text-color: #594e4e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden; /* Prevent scrolling during transitions */
+    height: 100vh;
+    width: 100vw;
+}
+
+section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+    background-size: cover;
+    background-position: center;
+}
+
+section.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Backgrounds provided by user */
+#page1 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE8aTzgGACpvFHL7rdMaLrOmK8D6cfBIDCkg&s'); } /* Add full base64 here */
+#page2 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvHDAOOe98QqfOl3uDxsR0luWkpHtRJXAPfA&s'); }
+#page3 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvHDAOOe98QqfOl3uDxsR0luWkpHtRJXAPfA&s'); }
+#page4 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvHDAOOe98QqfOl3uDxsR0luWkpHtRJXAPfA&s'); }
+
+/* Mute Button */
+#mute-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Page 1: Countdown */
+.heart-center {
+    font-size: 80px;
+    color: var(--soft-red);
+    animation: pulse 1.5s infinite;
+}
+
+#countdown-text {
+    font-size: 4rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.hidden { display: none; }
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: var(--soft-red);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-top: 20px;
+}
+
+button:hover { transform: scale(1.1); }
+
+/* Page 2: Envelope */
+.envelope-wrapper {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #f19ea3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.envelope::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-top: 100px solid #f19ea3;
+    transform-origin: top;
+    transition: transform 0.5s 0.5s;
+    z-index: 2;
+}
+
+.stamp {
+    width: 50px;
+    height: 50px;
+    background: var(--soft-red);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    border: 2px dashed white;
+}
+
+.letter {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    left: 5%;
+    height: 150%;
+    background: white;
+    padding: 20px;
+    transition: transform 0.8s;
+    z-index: 1;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+}
+
+.letter-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.letter-content {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.open .envelope::before { transform: rotateX(180deg); z-index: 0; }
+.open .letter { transform: translateY(-120px); z-index: 2; }
+
+/* Page 3: Polaroid */
+#polaroid-gallery {
+    width: 100%;
+    height: 80%;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 50px;
+}
+
+.photo-container {
+    display: flex;
+    gap: 30px;
+}
+
+.polaroid {
+    background: white;
+    padding: 10px 10px 30px 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: rotate(-3deg);
+    display: inline-block;
+    animation: swing 3s ease-in-out infinite alternate;
+}
+
+.polaroid img { width: 180px; height: 180px; object-fit: cover; }
+.polaroid p {
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Page 4: Diary */
+.diary-paper {
+    width: 80%;
+    max-width: 600px;
+    background: #fff;
+    background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+    background-size: 100% 30px;
+    padding: 40px;
+    min-height: 400px;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.1);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes swing {
+    from { transform: rotate(-5deg); }
+    to { transform: rotate(5deg); }
+}
+
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+--------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Sunshine</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital@0;1&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <audio id="bg-music" loop></audio>
+    <button id="mute-btn">🔊</button>
+
+    <!-- Hearts Falling -->
+    <div id="falling-hearts"></div>
+
+    <section id="page1" class="active">
+        <div class="heart-center">❤</div>
+        <div id="countdown-text"></div>
+        <button id="open-surprise" class="hidden">Open My Surprise 💌</button>
+    </section>
+
+    <section id="page2">
+        <div class="envelope-wrapper">
+            <div class="envelope">
+                <div class="stamp">❤</div>
+            </div>
+
+            <div class="letter hidden">
+                <div class="paper">
+                    <div class="paper-top">
+                        <img src="assets/images/photo1.jpg" alt="Your Photo" class="letter-photo">
+                        <div class="paper-title">
+                            <h2>To My Dearest Friend</h2>
+                            <p class="tiny">A small letter from my heart 💗</p>
+                        </div>
+                    </div>
+
+                    <div class="letter-content">
+                        <p>They say the world is a vast place, but to me, it became small and perfect the day I met you.</p>
+
+                        <p>
+                            You are the <b>Sunshine</b> that filters through my quietest moments.<br>
+                            You are the <b>Sunshine</b> that makes my soul feel safe.
+                        </p>
+
+                        <p>
+                            Whenever life feels a bit too loud for an introvert like me,
+                            I find peace in our bond.
+                        </p>
+
+                        <p>
+                            I hope this year brings you as much warmth as you bring to me.
+                        </p>
+
+                        <p class="sign">Happy Birthday 💌</p>
+                    </div>
+
+                    <button id="love-btn">LOVE 💗</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE 3 UPDATED -->
+    <section id="page3">
+        <div id="gift-container">
+            <div class="gift-box">🎁</div>
+        </div>
+
+        <!-- Hanging cards gallery -->
+        <div id="hanging-gallery" class="hidden">
+            <div class="hanging-area" id="hangingArea"></div>
+
+            <button class="open-diary-btn" id="openDiaryBtn">Open Diary</button>
+
+        </div>
+    </section>
+
+    <!-- PAGE 4 (kept but now diary is separate file) -->
+    <section id="page4">
+        <div class="diary-paper">
+            <h1 class="diary-title">Dear Sunshine,</h1>
+            <div id="diary-body"></div>
+            <p class="final-line hidden">This is my gift to you — forever.</p>
+        </div>
+        <div class="floating-hearts"></div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

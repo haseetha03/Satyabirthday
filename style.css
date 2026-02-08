@@ -1,0 +1,427 @@
+:root {
+    --pink: #ffccd5;
+    --soft-red: #ff4d6d;
+    --cream: #fff5f5;
+    --text-color: #594e4e;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--text-color);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    pointer-events: none;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    image-rendering: auto;
+}
+
+section.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Backgrounds provided by user */
+#page1 { background-image: url('https://media.istockphoto.com/id/1433763174/vector/groovy-background-tunnel-of-concentric-hearts-romantic-cute-illustration-trendy-girly-preppy.jpg?s=612x612&w=0&k=20&c=_vQzrjvPnMWrD-x_rtSK0Nsy_ZVSCGsgZ3w125uqBoY='); }
+#page2 { background-image: url('https://media.istockphoto.com/id/1433763174/vector/groovy-background-tunnel-of-concentric-hearts-romantic-cute-illustration-trendy-girly-preppy.jpg?s=612x612&w=0&k=20&c=_vQzrjvPnMWrD-x_rtSK0Nsy_ZVSCGsgZ3w125uqBoY='); }
+#page3 { background-image: url('https://media.istockphoto.com/id/1433763174/vector/groovy-background-tunnel-of-concentric-hearts-romantic-cute-illustration-trendy-girly-preppy.jpg?s=612x612&w=0&k=20&c=_vQzrjvPnMWrD-x_rtSK0Nsy_ZVSCGsgZ3w125uqBoY='); }
+#page4 { background-image: url('https://media.istockphoto.com/id/1433763174/vector/groovy-background-tunnel-of-concentric-hearts-romantic-cute-illustration-trendy-girly-preppy.jpg?s=612x612&w=0&k=20&c=_vQzrjvPnMWrD-x_rtSK0Nsy_ZVSCGsgZ3w125uqBoY='); }
+
+/* Diary page background (same as page4) */
+.diary-only{
+    background-image: url('https://media.istockphoto.com/id/1433763174/vector/groovy-background-tunnel-of-concentric-hearts-romantic-cute-illustration-trendy-girly-preppy.jpg?s=612x612&w=0&k=20&c=_vQzrjvPnMWrD-x_rtSK0Nsy_ZVSCGsgZ3w125uqBoY=');
+}
+
+/* Mute Button */
+#mute-btn {
+    /* position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); */
+    display: none;
+    
+}
+
+/* Page 1: Countdown */
+.heart-center {
+    font-size: 80px;
+    color: var(--soft-red);
+    animation: pulse 1.5s infinite;
+}
+
+#countdown-text {
+    font-size: 4rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.hidden { display: none; }
+
+button, .open-diary-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    background: var(--soft-red);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-top: 20px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button:hover, .open-diary-btn:hover { transform: scale(1.08); }
+
+/* =========================
+   FALLING HEARTS
+========================= */
+#falling-hearts{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+}
+
+.fall-heart{
+    position: absolute;
+    top: -40px;
+    font-size: 22px;
+    opacity: 0.85;
+    animation: fallDown linear forwards;
+    color: rgba(255, 77, 109, 0.65);
+}
+
+@keyframes fallDown{
+    0%{
+        transform: translateY(-40px);
+        opacity: 0;
+    }
+    10%{
+        opacity: 0.9;
+    }
+    100%{
+        transform: translateY(120vh);
+        opacity: 0;
+    }
+}
+
+/* =========================
+   PAGE 2: ENVELOPE
+========================= */
+.envelope-wrapper {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    cursor: pointer;
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #f19ea3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.envelope::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 160px solid transparent;
+    border-right: 160px solid transparent;
+    border-top: 110px solid #f19ea3;
+    transform-origin: top;
+    transition: transform 0.5s 0.5s;
+    z-index: 2;
+}
+
+.stamp {
+    width: 55px;
+    height: 55px;
+    background: var(--soft-red);
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3;
+    border: 2px dashed white;
+    box-shadow: 0 10px 25px rgba(255, 77, 109, 0.35);
+}
+
+.letter {
+    position: absolute;
+    bottom: 0;
+    width: 95%;
+    left: 2.5%;
+    height: 125%;
+    transition: transform 0.8s;
+    z-index: 1;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.letter.hidden{
+    display: none;
+}
+
+.paper{
+    background: #fffdf8;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 -8px 25px rgba(0,0,0,0.12);
+    border: 2px solid rgba(255, 77, 109, 0.18);
+    background-image: linear-gradient(#f2f2f2 1px, transparent 1px);
+    background-size: 100% 28px;
+}
+
+.paper-top{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.paper-title h2{
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: #3a2d2d;
+}
+
+.tiny{
+    font-size: 0.85rem;
+    opacity: 0.75;
+    color: #3a2d2d;
+}
+
+.letter-photo {
+    width:80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    border: 3px solid rgba(255, 77, 109, 0.25);
+}
+
+.letter-content {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.35rem;
+    line-height: 1.55;
+    color: #3a2d2d;
+}
+
+.sign{
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.open .envelope::before { transform: rotateX(180deg); z-index: 0; }
+.open .letter { transform: translateY(-130px); z-index: 2; }
+
+/* =========================
+   PAGE 3: GIFT + HANGING CARDS
+========================= */
+#gift-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gift-box{
+    font-size: 90px;
+    cursor: pointer;
+    animation: pulse 1.5s infinite;
+}
+
+#hanging-gallery{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+}
+
+
+/* .hanging-area{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1100px, 100%);
+    height: 78%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px 16px;
+    /* padding-top: 50px; */
+    /* overflow-y: auto;
+    padding-bottom: 120px; */
+/* } */ 
+.hanging-area{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 18px 16px;
+    padding: 70px 20px 140px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    scroll-behavior: smooth;
+}
+
+
+/* Each hanging item */
+.hang-item{
+    position: relative;
+    width: 160px;
+    display: flex;
+    justify-content: center;
+}
+
+/* The string */
+.hang-string{
+    position: absolute;
+    top: 0;
+    width: 2px;
+    background: rgba(255, 77, 109, 0.35);
+    border-radius: 999px;
+}
+
+/* The card */
+.hang-card{
+    width: 160px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.10);
+    overflow: hidden;
+    transform-origin: top center;
+    animation: hangSwing 3.5s ease-in-out infinite alternate;
+    border: 2px solid rgba(255, 77, 109, 0.12);
+}
+
+/* Image top */
+.hang-card img{
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Quote below */
+.hang-quote{
+    padding: 10px 10px 12px;
+    font-size: 0.9rem;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    color: #3a2d2d;
+}
+
+/* Swing animation */
+@keyframes hangSwing{
+    from { transform: rotate(-3deg); }
+    to { transform: rotate(3deg); }
+}
+
+/* Bottom Open Diary button */
+.open-diary-btn{
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: var(--soft-red);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.18);
+}
+
+/* Responsive for mobile */
+@media(max-width: 600px){
+    .hang-item{
+        width: 120px;
+    }
+    .hang-card{
+        width: 120px;
+    }
+    .hang-card img{
+        height: 120px;
+    }
+    .hanging-area{
+        gap: 12px 10px;
+        padding-top: 35px;
+    }
+    .hang-quote{
+        font-size: 0.8rem;
+    }
+}
+
+/* =========================
+   PAGE 4: DIARY
+========================= */
+.diary-paper {
+    width: 80%;
+    max-width: 600px;
+    background: #fff;
+    background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+    background-size: 100% 30px;
+    padding: 40px;
+    min-height: 400px;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.1);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}

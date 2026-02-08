@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dear Sunshine 💗</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:ital@0;1&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <audio id="bg-music" loop autoplay></audio>
+  <button id="mute-btn">🔊</button>
+
+  <div id="falling-hearts"></div>
+  
+
+  <section id="diaryPage" class="active diary-only">
+    <div class="diary-paper">
+      <h1 class="diary-title">Dear Sunshine,</h1>
+      <div id="diary-body"></div>
+      <p class="final-line hidden">This is my gift to you — forever.</p>
+    </div>
+  </section>
+
+  <script>
+    const audio = document.getElementById("bg-music");
+    const muteBtn = document.getElementById("mute-btn");
+
+    audio.src = "assets/music/diarySong.mp3";
+    audio.volume = 0.8;
+    audio.play().catch(()=>{});
+
+    muteBtn.addEventListener("click", ()=>{
+      audio.muted = !audio.muted;
+      muteBtn.innerText = audio.muted ? "🔇" : "🔊";
+    });
+
+    // Falling hearts
+    let heartsStarted = false;
+    function startFallingHearts() {
+      if (heartsStarted) return;
+      heartsStarted = true;
+
+      const container = document.getElementById("falling-hearts");
+
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "fall-heart";
+        heart.innerHTML = "&#10084;";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (16 + Math.random() * 20) + "px";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+        container.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 9000);
+
+      }, 60);
+    }
+    startFallingHearts();
+
+    // Typing effect
+    const diaryText = `Dear Sunshine, 
+    
+As an introvert, I don't always say the words out loud, but I hope you feel them in this code.
+You are the person who understands my silence.
+You are the warmth on a cold day. 
+    
+In every line of my life, you are the most beautiful poetry.
+May your year be as gentle and lovely as you are.`;
+
+    function startTyping(){
+      const el = document.getElementById("diary-body");
+      el.innerHTML = "";
+      let i = 0;
+
+      function type(){
+        if(i < diaryText.length){
+          el.innerHTML += diaryText.charAt(i);
+          i++;
+          setTimeout(type, 45);
+        }else{
+          document.querySelector(".final-line").classList.remove("hidden");
+        }
+      }
+      type();
+    }
+    startTyping();
+  </script>
+
+</body>
+</html>
